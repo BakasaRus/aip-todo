@@ -38,44 +38,7 @@
 <main class="container my-5">
     <h1 class="mb-5">Мои дела</h1>
     <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <strong>Литература</strong>
-                    <span class="badge rounded-pill bg-primary ms-1">1 / 3</span>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span>Крис Ричардсон, "Микросервисы. Паттерны разработки и рефакторинга"</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span>Сэм Ньюмен, "От монолита к микросервисам"</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span>Адам Беллемар, "Создание событийно-управляемых микросервисов"</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <strong>Академия</strong>
-                    <span class="badge rounded-pill bg-primary ms-1">1 / 3</span>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span>Блок занятий по технологиям разработки</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span>Блок занятий по Flask</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span>Блок занятий по БД и ORM</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% for todo_list in todo_lists %}
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -95,6 +58,7 @@
                 </ul>
             </div>
         </div>
+        {% endfor %}
     </div>
 </main>
 <footer></footer>
