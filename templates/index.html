@@ -4,102 +4,103 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Hello, world!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>{{ title }}</title>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">ToDon't</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Мои дела</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Добавить список дел</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-light" type="submit">Search</button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <main class="container my-5">
-        <h1 class="mb-5">Мои дела</h1>
-        <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <strong>Литература</strong>
-                        <span class="badge rounded-pill bg-primary ms-1">1 / 3</span>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span>Крис Ричардсон, "Микросервисы. Паттерны разработки и рефакторинга"</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Сэм Ньюмен, "От монолита к микросервисам"</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Адам Беллемар, "Создание событийно-управляемых микросервисов"</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <strong>Академия</strong>
-                        <span class="badge rounded-pill bg-primary ms-1">1 / 3</span>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span>Блок занятий по технологиям разработки</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Блок занятий по Flask</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Блок занятий по БД и ORM</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <strong>Игры</strong>
-                        <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span>The Legend of Zelda: Breath of the Wild</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>The Legend of Zelda: Skyward Sword</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Super Mario Odyssey</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Pokémon Legends: Arceus</span>
-                        </li>
-                    </ul>
-                </div>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">ToDon't</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Мои дела</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Добавить список дел</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
             </div>
         </div>
-    </main>
-    <footer></footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </nav>
+</header>
+<main class="container my-5">
+    <h1 class="mb-5">Мои дела</h1>
+    <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Литература</strong>
+                    <span class="badge rounded-pill bg-primary ms-1">1 / 3</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span>Крис Ричардсон, "Микросервисы. Паттерны разработки и рефакторинга"</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span>Сэм Ньюмен, "От монолита к микросервисам"</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span>Адам Беллемар, "Создание событийно-управляемых микросервисов"</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Академия</strong>
+                    <span class="badge rounded-pill bg-primary ms-1">1 / 3</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span>Блок занятий по технологиям разработки</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span>Блок занятий по Flask</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span>Блок занятий по БД и ORM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong>{{ todo_list.name }}</strong>
+                    <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for item in todo_list['items'] %}
+                    <li class="list-group-item">
+                        {% if item.is_done %}
+                        <span class="text-decoration-line-through text-muted">{{ item.name }}</span>
+                        {% else %}
+                        <span>{{ item.name }}</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+<footer></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

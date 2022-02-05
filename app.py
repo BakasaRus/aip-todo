@@ -4,9 +4,32 @@ from markupsafe import escape
 app = Flask(__name__)
 
 
+todo_list = {
+    'name': 'Игры',
+    'items': [
+        {
+            'name': 'The Legend of Zelda: Breath of the Wild',
+            'is_done': True
+        },
+        {
+            'name': 'The Legend of Zelda: Skyward Sword',
+            'is_done': False
+        },
+        {
+            'name': 'Super Mario Odyssey',
+            'is_done': True
+        },
+        {
+            'name': 'Pokémon Legends: Arceus',
+            'is_done': False
+        },
+    ]
+}
+
+
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    return render_template('index.html', title="ToDon't", todo_list=todo_list)
 
 
 @app.route('/about')
