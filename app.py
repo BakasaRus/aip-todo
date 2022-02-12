@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
+from werkzeug import exceptions
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -56,7 +57,14 @@ def get_lists():
 
 @app.route('/lists/<int:list_id>')
 def get_list(list_id):
+    if list_id > len(todo_lists):
+        abort(exceptions.NotFound.code)
     return render_template('list.html', todo_list=todo_lists[list_id - 1])
+
+
+@app.errorhandler(exceptions.NotFound)
+def not_found(error):
+    return render_template('404.html'), exceptions.NotFound.code
 
 
 if __name__ == '__main__':
