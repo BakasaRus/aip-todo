@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request
 from werkzeug import exceptions
 from markupsafe import escape
 
@@ -48,6 +48,13 @@ def homepage():
 @app.route('/about')
 def about():
     return 'About me'
+
+
+@app.route('/search')
+def search():
+    text = escape(request.args.get('text', '').lower())
+    selected_lists = [todo_list for todo_list in todo_lists if text in todo_list['name'].lower()]
+    return render_template('index.html', todo_lists=selected_lists)
 
 
 @app.route('/lists')
