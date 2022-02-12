@@ -8,6 +8,7 @@ todo_lists = [
     {
         'id': 1,
         'name': 'Литература',
+        'cover': 'images/books.jpg',
         'items': [
             {'name': 'Крис Ричардсон, "Микросервисы. Паттерны разработки и рефакторинга"', 'is_done': True},
             {'name': 'Сэм Ньюмен, "От монолита к микросервисам"', 'is_done': False},
@@ -17,6 +18,7 @@ todo_lists = [
     {
         'id': 2,
         'name': 'Академия',
+        'cover': 'images/aip.jpg',
         'items': [
             {'name': 'Блок занятий по технологиям разработки', 'is_done': True},
             {'name': 'Блок занятий по Flask', 'is_done': False},
@@ -26,6 +28,7 @@ todo_lists = [
     {
         'id': 3,
         'name': 'Игры',
+        'cover': 'images/games.jpg',
         'items': [
             {'name': 'The Legend of Zelda: Breath of the Wild', 'is_done': True},
             {'name': 'The Legend of Zelda: Skyward Sword', 'is_done': False},

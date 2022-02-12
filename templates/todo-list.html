@@ -1,4 +1,5 @@
 <div class="card">
+    <img src="{{ url_for('static', filename=todo_list.cover) }}" class="card-img-top" alt="{{ todo_list.name }}">
     <div class="card-header">
         <a href="{{ url_for('get_list', list_id=todo_list.id) }}">
             <strong>{{ todo_list.name }}</strong>
