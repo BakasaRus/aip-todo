@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 todo_lists = [
     {
+        'id': 1,
         'name': 'Литература',
         'items': [
             {'name': 'Крис Ричардсон, "Микросервисы. Паттерны разработки и рефакторинга"', 'is_done': True},
@@ -14,6 +15,7 @@ todo_lists = [
         ]
     },
     {
+        'id': 2,
         'name': 'Академия',
         'items': [
             {'name': 'Блок занятий по технологиям разработки', 'is_done': True},
@@ -22,6 +24,7 @@ todo_lists = [
         ]
     },
     {
+        'id': 3,
         'name': 'Игры',
         'items': [
             {'name': 'The Legend of Zelda: Breath of the Wild', 'is_done': True},
@@ -34,7 +37,7 @@ todo_lists = [
 
 
 @app.route('/')
-def hello_world():
+def homepage():
     return render_template('index.html', title="ToDon't", todo_lists=todo_lists)
 
 

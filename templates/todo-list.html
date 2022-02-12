@@ -1,6 +1,8 @@
 <div class="card">
     <div class="card-header">
-        <strong>{{ todo_list.name }}</strong>
+        <a href="{{ url_for('get_list', list_id=todo_list.id) }}">
+            <strong>{{ todo_list.name }}</strong>
+        </a>
         <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
     </div>
     <ul class="list-group list-group-flush">
