@@ -50,7 +50,7 @@ def get_lists():
 
 @app.route('/lists/<int:list_id>')
 def get_list(list_id):
-    return f'ToDo list {escape(list_id)}'
+    return render_template('list.html', todo_list=todo_lists[list_id - 1])
 
 
 if __name__ == '__main__':
