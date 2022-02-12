@@ -9,23 +9,7 @@
 <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
     {% for todo_list in todo_lists %}
     <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <strong>{{ todo_list.name }}</strong>
-                <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
-            </div>
-            <ul class="list-group list-group-flush">
-                {% for item in todo_list['items'] %}
-                <li class="list-group-item">
-                    {% if item.is_done %}
-                    <span class="text-decoration-line-through text-muted">{{ item.name }}</span>
-                    {% else %}
-                    <span>{{ item.name }}</span>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+        {% include 'todo-list.html' %}
     </div>
     {% endfor %}
 </div>
