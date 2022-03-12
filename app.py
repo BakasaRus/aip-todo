@@ -48,9 +48,18 @@ class TodoList(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
     cover = db.Column(db.Text)
+    items = db.relationship('TodoItem', backref='list', lazy=True)
 
     def __repr__(self):
         return f'<TodoList {self.name}>'
+
+
+class TodoItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable=False)
+    is_done = db.Column(db.Boolean, nullable=False, default=False)
+    list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'), nullable=False)
+
 
 
 @app.route('/')
