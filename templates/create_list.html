@@ -6,6 +6,7 @@
 
 {% block content %}
     <form action="{{ url_for('get_lists') }}" method="POST">
+        {{ form.csrf_token }}
         <div>
             <label for="name">Название</label>
             <input type="text" id="name" name="name">
