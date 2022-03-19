@@ -5,15 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ url_for('get_lists') }}" method="POST">
+    <form action="{{ url_for('create_list') }}" method="POST">
         {{ form.csrf_token }}
         <div>
             <label for="name">Название</label>
             <input type="text" id="name" name="name">
+            {% if form.name.errors %}
+                <ul class="errors">
+                {% for error in form.name.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <div>
             <label for="cover">Ссылка на обложку</label>
             <input type="url" id="cover" name="cover">
+            {% if form.cover.errors %}
+                <ul class="errors">
+                {% for error in form.cover.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <div>
             <button type="submit">Сохранить</button>

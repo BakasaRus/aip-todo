@@ -4,6 +4,7 @@ from markupsafe import escape
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField
+from wtforms.validators import DataRequired, Length, URL
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -31,8 +32,8 @@ class TodoItem(db.Model):
 
 
 class CreateTodoList(FlaskForm):
-    name = StringField('Название')
-    cover = StringField('Ссылка на обложку')
+    name = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
+    cover = StringField('Ссылка на обложку', validators=[DataRequired(), URL()])
 
 
 @app.route('/')
@@ -53,8 +54,13 @@ def search():
     return render_template('index.html', todo_lists=selected_lists)
 
 
-@app.route('/lists', methods=['GET', 'POST'])
+@app.route('/lists')
 def get_lists():
+    return 'All ToDo lists'
+
+
+@app.route('/lists/create', methods=['GET', 'POST'])
+def create_list():
     create_todo_list_form = CreateTodoList()
     if create_todo_list_form.validate_on_submit():
         name = request.form.get('name')
@@ -63,13 +69,6 @@ def get_lists():
         db.session.add(new_todo)
         db.session.commit()
         return redirect('/')
-    else:
-        return 'All ToDo lists'
-
-
-@app.route('/lists/create')
-def create_list():
-    create_todo_list_form = CreateTodoList()
     return render_template('create_list.html', form=create_todo_list_form)
 
 
