@@ -9,41 +9,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-todo_lists = [
-    {
-        'id': 1,
-        'name': 'Литература',
-        'cover': 'images/books.jpg',
-        'items': [
-            {'name': 'Крис Ричардсон, "Микросервисы. Паттерны разработки и рефакторинга"', 'is_done': True},
-            {'name': 'Сэм Ньюмен, "От монолита к микросервисам"', 'is_done': False},
-            {'name': 'Адам Беллемар, "Создание событийно-управляемых микросервисов"', 'is_done': False},
-        ]
-    },
-    {
-        'id': 2,
-        'name': 'Академия',
-        'cover': 'images/aip.jpg',
-        'items': [
-            {'name': 'Блок занятий по технологиям разработки', 'is_done': True},
-            {'name': 'Блок занятий по Flask', 'is_done': False},
-            {'name': 'Блок занятий по БД и ORM', 'is_done': False},
-        ]
-    },
-    {
-        'id': 3,
-        'name': 'Игры',
-        'cover': 'images/games.jpg',
-        'items': [
-            {'name': 'The Legend of Zelda: Breath of the Wild', 'is_done': True},
-            {'name': 'The Legend of Zelda: Skyward Sword', 'is_done': False},
-            {'name': 'Super Mario Odyssey', 'is_done': True},
-            {'name': 'Pokémon Legends: Arceus', 'is_done': False},
-        ]
-    },
-]
-
-
 class TodoList(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
@@ -63,6 +28,7 @@ class TodoItem(db.Model):
 
 @app.route('/')
 def homepage():
+    todo_lists = TodoList.query.all()
     return render_template('index.html', title="ToDon't", todo_lists=todo_lists)
 
 
@@ -73,8 +39,8 @@ def about():
 
 @app.route('/search')
 def search():
-    text = escape(request.args.get('text', '').lower())
-    selected_lists = [todo_list for todo_list in todo_lists if text in todo_list['name'].lower()]
+    text = escape(request.args.get('text', ''))
+    selected_lists = TodoList.query.filter(TodoList.name.like(f'%{text}%')).all()
     return render_template('index.html', todo_lists=selected_lists)
 
 
@@ -98,11 +64,8 @@ def create_list():
 
 @app.route('/lists/<int:list_id>')
 def get_list(list_id):
-    todo_list = TodoList.query.get(list_id)
-    print(todo_list)
-    if list_id > len(todo_lists):
-        abort(exceptions.NotFound.code)
-    return render_template('list.html', todo_list=todo_lists[list_id - 1])
+    todo_list = TodoList.query.get_or_404(list_id)
+    return render_template('list.html', todo_list=todo_list)
 
 
 @app.errorhandler(exceptions.NotFound)
