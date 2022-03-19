@@ -8,8 +8,8 @@
     <form action="{{ url_for('create_list') }}" method="POST">
         {{ form.csrf_token }}
         <div>
-            <label for="name">Название</label>
-            <input type="text" id="name" name="name">
+            {{ form.name.label }}
+            {{ form.name() }}
             {% if form.name.errors %}
                 <ul class="errors">
                 {% for error in form.name.errors %}
@@ -19,8 +19,8 @@
             {% endif %}
         </div>
         <div>
-            <label for="cover">Ссылка на обложку</label>
-            <input type="url" id="cover" name="cover">
+            {{ form.cover.label }}
+            {{ form.cover() }}
             {% if form.cover.errors %}
                 <ul class="errors">
                 {% for error in form.cover.errors %}
