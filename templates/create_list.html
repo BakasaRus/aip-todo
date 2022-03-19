@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Новый список дел
+{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for('get_lists') }}" method="POST">
+        <div>
+            <label for="name">Название</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="cover">Ссылка на обложку</label>
+            <input type="url" id="cover" name="cover">
+        </div>
+        <div>
+            <button type="submit">Сохранить</button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort, request, redirect
 from werkzeug import exceptions
 from markupsafe import escape
 from flask_sqlalchemy import SQLAlchemy
@@ -61,7 +61,6 @@ class TodoItem(db.Model):
     list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'), nullable=False)
 
 
-
 @app.route('/')
 def homepage():
     return render_template('index.html', title="ToDon't", todo_lists=todo_lists)
@@ -79,9 +78,22 @@ def search():
     return render_template('index.html', todo_lists=selected_lists)
 
 
-@app.route('/lists')
+@app.route('/lists', methods=['GET', 'POST'])
 def get_lists():
-    return 'All ToDo lists'
+    if request.method == 'POST':
+        name = request.form.get('name')
+        cover = request.form.get('cover')
+        new_todo = TodoList(name=name, cover=cover)
+        db.session.add(new_todo)
+        db.session.commit()
+        return redirect('/')
+    else:
+        return 'All ToDo lists'
+
+
+@app.route('/lists/create')
+def create_list():
+    return render_template('create_list.html')
 
 
 @app.route('/lists/<int:list_id>')
