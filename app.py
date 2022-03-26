@@ -78,6 +78,11 @@ def get_list(list_id):
     return render_template('list.html', todo_list=todo_list)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('login.html')
+
+
 @app.errorhandler(exceptions.NotFound)
 def not_found(error):
     return render_template('404.html'), exceptions.NotFound.code
