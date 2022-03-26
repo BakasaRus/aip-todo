@@ -3,8 +3,9 @@ from werkzeug import exceptions
 from markupsafe import escape
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField
-from wtforms.validators import DataRequired, Length, URL
+from wtforms import StringField, EmailField, PasswordField
+from wtforms.validators import DataRequired, Length, URL, Email
+from flask_login import LoginManager, UserMixin, login_user, logout_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -12,6 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'rtdgykjio;hugly&&fuvhjb,uoi89t76cfjh!g8p!u9w7'
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
+login_manager = LoginManager(app)
 
 
 class TodoList(db.Model):
@@ -31,9 +33,26 @@ class TodoItem(db.Model):
     list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'), nullable=False)
 
 
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False)
+    nickname = db.Column(db.String(32), nullable=False)
+
+
 class CreateTodoList(FlaskForm):
     name = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
     cover = StringField('Ссылка на обложку', validators=[DataRequired(), URL()])
+
+
+class LoginForm(FlaskForm):
+    email = EmailField('Электронная почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(int(user_id))
 
 
 @app.route('/')
@@ -80,7 +99,23 @@ def get_list(list_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email, password=password).first()
+        if user:
+            login_user(user)
+            return redirect('/')
+        else:
+            return render_template('login.html', form=login_form)
+    return render_template('login.html', form=login_form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 @app.errorhandler(exceptions.NotFound)

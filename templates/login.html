@@ -8,15 +8,16 @@
     <div class="row">
         <div class="col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
             <form action="{{ url_for('login') }}" method="POST" class="text-center">
+                {{ form.csrf_token }}
                 <h1 class="h3 mb-3 fw-normal">Войдите на сайт</h1>
 
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Электронная почта</label>
+                    {{ form.email(class='form-control', placeholder=form.email.label.text) }}
+                    {{ form.email.label }}
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
-                    <label for="floatingPassword">Пароль</label>
+                    {{ form.password(class='form-control', placeholder=form.password.label.text) }}
+                    {{ form.password.label }}
                 </div>
 
                 <div class="checkbox my-3">
