@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, EmailField, PasswordField
 from wtforms.validators import DataRequired, Length, URL, Email
 from flask_login import LoginManager, UserMixin, login_user, logout_user
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -14,6 +15,7 @@ app.config['SECRET_KEY'] = 'rtdgykjio;hugly&&fuvhjb,uoi89t76cfjh!g8p!u9w7'
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 login_manager = LoginManager(app)
+bcrypt = Bcrypt(app)
 
 
 class TodoList(db.Model):
@@ -36,8 +38,14 @@ class TodoItem(db.Model):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(60), nullable=False)
     nickname = db.Column(db.String(32), nullable=False)
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password, 10)
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
 
 
 class CreateTodoList(FlaskForm):
@@ -103,8 +111,8 @@ def login():
     if login_form.validate_on_submit():
         email = request.form.get('email')
         password = request.form.get('password')
-        user = User.query.filter_by(email=email, password=password).first()
-        if user:
+        user = User.query.filter_by(email=email).first()
+        if user and user.check_password(password):
             login_user(user)
             return redirect('/')
         else:
