@@ -11,6 +11,7 @@ class TodoList(db.Model):
     name = db.Column(db.String(80), nullable=False)
     cover = db.Column(db.Text)
     items = db.relationship('TodoItem', backref='list', lazy=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f'<TodoList {self.name}>'
@@ -28,6 +29,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
     nickname = db.Column(db.String(32), nullable=False)
+    todos = db.relationship('TodoList', backref='owner', lazy=True)
 
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(password, 10).decode('utf-8')
