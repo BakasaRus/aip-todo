@@ -60,7 +60,7 @@ def create_list():
         name = request.form.get('name')
         cover = request.form.get('cover')
         user_id = current_user.id
-        new_todo = TodoList(name=name, cover=cover, user_id=id)
+        new_todo = TodoList(name=name, cover=cover, user_id=user_id)
         db.session.add(new_todo)
         db.session.commit()
         return redirect('/')
