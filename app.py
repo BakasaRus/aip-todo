@@ -4,11 +4,12 @@ from markupsafe import escape
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from forms import csrf, LoginForm, CreateTodoList, RegistrationForm
 from models import db, bcrypt, User, TodoList, TodoItem
+from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'rtdgykjio;hugly&&fuvhjb,uoi89t76cfjh!g8p!u9w7'
+app.config['SECRET_KEY'] = environ.get('APP_SECRET_KEY')
 
 login_manager = LoginManager(app)
 csrf.init_app(app)
