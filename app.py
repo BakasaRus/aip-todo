@@ -1,7 +1,7 @@
 from flask import Flask, render_template, abort, request, redirect
 from werkzeug import exceptions
 from markupsafe import escape
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from forms import csrf, LoginForm, CreateTodoList, RegistrationForm
 from models import db, bcrypt, User, TodoList, TodoItem
 from os import environ
@@ -59,7 +59,8 @@ def create_list():
     if create_todo_list_form.validate_on_submit():
         name = request.form.get('name')
         cover = request.form.get('cover')
-        new_todo = TodoList(name=name, cover=cover)
+        user_id = current_user.id
+        new_todo = TodoList(name=name, cover=cover, user_id=id)
         db.session.add(new_todo)
         db.session.commit()
         return redirect('/')
