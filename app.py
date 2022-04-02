@@ -65,8 +65,20 @@ def get_list(list_id):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
-    return render_template('register.html', form=form)
+    register_form = RegistrationForm()
+    if register_form.validate_on_submit():
+        email = request.form.get('email')
+        nickname = request.form.get('nickname')
+        password = request.form.get('password')
+        user = User()
+        user.email = email
+        user.nickname = nickname
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return redirect('/')
+    return render_template('register.html', form=register_form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
