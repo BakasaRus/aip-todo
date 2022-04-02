@@ -2,7 +2,7 @@ from flask import Flask, render_template, abort, request, redirect
 from werkzeug import exceptions
 from markupsafe import escape
 from flask_login import LoginManager, UserMixin, login_user, logout_user
-from forms import csrf, LoginForm, CreateTodoList
+from forms import csrf, LoginForm, CreateTodoList, RegistrationForm
 from models import db, bcrypt, User, TodoList, TodoItem
 
 app = Flask(__name__)
@@ -61,6 +61,12 @@ def create_list():
 def get_list(list_id):
     todo_list = TodoList.query.get_or_404(list_id)
     return render_template('list.html', todo_list=todo_list)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
