@@ -3,10 +3,9 @@ from werkzeug import exceptions
 from markupsafe import escape
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, EmailField, PasswordField
-from wtforms.validators import DataRequired, Length, URL, Email
 from flask_login import LoginManager, UserMixin, login_user, logout_user
 from flask_bcrypt import Bcrypt
+from forms import LoginForm, CreateTodoList
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -46,16 +45,6 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
-
-
-class CreateTodoList(FlaskForm):
-    name = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
-    cover = StringField('Ссылка на обложку', validators=[DataRequired(), URL()])
-
-
-class LoginForm(FlaskForm):
-    email = EmailField('Электронная почта', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
 
 
 @login_manager.user_loader
