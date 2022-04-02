@@ -1,50 +1,19 @@
 from flask import Flask, render_template, abort, request, redirect
 from werkzeug import exceptions
 from markupsafe import escape
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import FlaskForm, CSRFProtect
+from flask_wtf import CSRFProtect
 from flask_login import LoginManager, UserMixin, login_user, logout_user
-from flask_bcrypt import Bcrypt
 from forms import LoginForm, CreateTodoList
+from models import db, bcrypt, User, TodoList, TodoItem
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'rtdgykjio;hugly&&fuvhjb,uoi89t76cfjh!g8p!u9w7'
-db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 login_manager = LoginManager(app)
-bcrypt = Bcrypt(app)
-
-
-class TodoList(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(80), nullable=False)
-    cover = db.Column(db.Text)
-    items = db.relationship('TodoItem', backref='list', lazy=True)
-
-    def __repr__(self):
-        return f'<TodoList {self.name}>'
-
-
-class TodoItem(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.Text, nullable=False)
-    is_done = db.Column(db.Boolean, nullable=False, default=False)
-    list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'), nullable=False)
-
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(60), nullable=False)
-    nickname = db.Column(db.String(32), nullable=False)
-
-    def set_password(self, password):
-        self.password = bcrypt.generate_password_hash(password, 10)
-
-    def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
+db.init_app(app)
+bcrypt.init_app(app)
 
 
 @login_manager.user_loader
