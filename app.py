@@ -1,7 +1,7 @@
 from flask import Flask, render_template, abort, request, redirect
 from werkzeug import exceptions
 from markupsafe import escape
-from flask_login import LoginManager, UserMixin, login_user, logout_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from forms import csrf, LoginForm, CreateTodoList, RegistrationForm
 from models import db, bcrypt, User, TodoList, TodoItem
 
@@ -45,6 +45,7 @@ def get_lists():
 
 
 @app.route('/lists/create', methods=['GET', 'POST'])
+@login_required
 def create_list():
     create_todo_list_form = CreateTodoList()
     if create_todo_list_form.validate_on_submit():
