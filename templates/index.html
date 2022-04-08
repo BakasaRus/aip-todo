@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Главная страница
+    Главная страница
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-5">Мои дела</h1>
-<div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
-    {% for todo_list in todo_lists %}
-    <div class="col">
-        {% include 'todo-list.html' %}
-    </div>
-    {% endfor %}
-</div>
+    <h1 class="mb-5">Мои дела</h1>
+    {% if current_user.is_anonymous %}
+        <div class="alert alert-warning">
+            Для доступа к спискам дел зарегистрируйтесь или войдите в систему.
+        </div>
+    {% elif todo_lists %}
+        <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
+            {% for todo_list in todo_lists %}
+                <div class="col">
+                    {% include 'todo-list.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Пока что у Вас нет никаких дел. Но всегда можно создать новый список для них :)
+        </div>
+    {% endif %}
 {% endblock %}
