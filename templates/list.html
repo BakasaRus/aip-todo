@@ -1,25 +1,35 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ todo_list.name }}
+    {{ todo_list.name }}
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-5">
-    {{ todo_list.name }}
-    <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
-</h1>
-<div class="card">
-    <ul class="list-group list-group-flush">
-        {% for item in todo_list['items'] %}
-        <li class="list-group-item">
-            {% if item.is_done %}
-            <span class="text-decoration-line-through text-muted">{{ item.name }}</span>
-            {% else %}
-            <span>{{ item.name }}</span>
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+    <h1 class="mb-5">
+        {{ todo_list.name }}
+        <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
+    </h1>
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            {% for item in todo_list['items'] %}
+                <li class="list-group-item">
+                    {% if item.is_done %}
+                        <span class="text-decoration-line-through text-muted">{{ item.name }}</span>
+                    {% else %}
+                        <span>{{ item.name }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <form action="" method="POST" class="mt-3">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Новый пункт"
+                   aria-label="Новый пункт" aria-describedby="button-addon2">
+            <button class="btn btn-outline-primary" type="submit" id="button-addon2">
+                Добавить
+            </button>
+        </div>
+    </form>
 {% endblock %}
