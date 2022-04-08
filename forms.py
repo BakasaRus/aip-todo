@@ -21,3 +21,6 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     password_confirmation = PasswordField('Пароль ещё раз', validators=[DataRequired(), EqualTo('password')])
 
+
+class AddTodoItemForm(FlaskForm):
+    name = StringField('Новый пункт', validators=[DataRequired()])

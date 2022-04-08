@@ -25,11 +25,11 @@
 
     <form action="" method="POST" class="mt-3">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Новый пункт"
-                   aria-label="Новый пункт" aria-describedby="button-addon2">
+            {{ form.name(class='form-control', placeholder=form.name.label.text) }}
             <button class="btn btn-outline-primary" type="submit" id="button-addon2">
                 Добавить
             </button>
         </div>
+        {{ form.csrf_token }}
     </form>
 {% endblock %}

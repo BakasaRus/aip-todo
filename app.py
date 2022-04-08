@@ -1,8 +1,8 @@
-from flask import Flask, render_template, abort, request, redirect
+from flask import Flask, render_template, abort, request, redirect, url_for
 from werkzeug import exceptions
 from markupsafe import escape
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from forms import csrf, LoginForm, CreateTodoList, RegistrationForm
+from forms import csrf, LoginForm, CreateTodoList, RegistrationForm, AddTodoItemForm
 from models import db, bcrypt, User, TodoList, TodoItem
 from os import environ
 
@@ -67,10 +67,18 @@ def create_list():
     return render_template('create_list.html', form=create_todo_list_form)
 
 
-@app.route('/lists/<int:list_id>')
+@app.route('/lists/<int:list_id>', methods=['GET', 'POST'])
 def get_list(list_id):
     todo_list = TodoList.query.get_or_404(list_id)
-    return render_template('list.html', todo_list=todo_list)
+    form = AddTodoItemForm()
+    if form.validate_on_submit():
+        name = request.form.get('name')
+        new_item = TodoItem(name=name)
+        todo_list.items.append(new_item)
+        db.session.add(new_item)
+        db.session.commit()
+        return redirect(url_for('get_list', list_id=list_id))
+    return render_template('list.html', todo_list=todo_list, form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
