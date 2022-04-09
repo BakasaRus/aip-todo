@@ -7,15 +7,21 @@
 {% block content %}
     <h1 class="mb-5">
         {{ todo_list.name }}
-        <span class="badge rounded-pill bg-primary ms-1">2 / 4</span>
+        {% if done_count == 0 %}
+            <span class="badge rounded-pill bg-danger ms-1">{{ done_count }} / {{ total_count }}</span>
+        {% elif done_count == total_count %}
+            <span class="badge rounded-pill bg-success ms-1">{{ done_count }} / {{ total_count }}</span>
+        {% else %}
+            <span class="badge rounded-pill bg-primary ms-1">{{ done_count }} / {{ total_count }}</span>
+        {% endif %}
     </h1>
     <div class="card">
         <ul class="list-group list-group-flush">
-            {% for item in todo_list['items'] %}
+            {% for item in todo_list.items %}
                 <li class="list-group-item d-flex align-items-center">
                     {% if item.is_done %}
                         <form action="{{ url_for('change_state', item_id=item.id) }}" method="POST" class="me-3">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button class="btn btn-success" type="submit" title="Пометить невыполненным">
                                 <i class="bi-check-square"></i>
                             </button>
@@ -23,7 +29,7 @@
                         <span class="text-decoration-line-through text-muted">{{ item.name }}</span>
                     {% else %}
                         <form action="{{ url_for('change_state', item_id=item.id) }}" method="POST" class="me-3">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button class="btn btn-success" type="submit" title="Пометить выполненным">
                                 <i class="bi-square"></i>
                             </button>

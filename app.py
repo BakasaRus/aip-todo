@@ -78,7 +78,10 @@ def get_list(list_id):
         db.session.add(new_item)
         db.session.commit()
         return redirect(url_for('get_list', list_id=list_id))
-    return render_template('list.html', todo_list=todo_list, form=form)
+    total_count = TodoItem.query.filter_by(list_id=list_id).count()
+    done_count = TodoItem.query.filter_by(list_id=list_id, is_done=True).count()
+    print(done_count, total_count)
+    return render_template('list.html', todo_list=todo_list, done_count=done_count, total_count=total_count, form=form)
 
 
 @app.route('/items/<int:item_id>/change-state', methods=['POST'])
