@@ -68,8 +68,11 @@ def create_list():
 
 
 @app.route('/lists/<int:list_id>', methods=['GET', 'POST'])
+@login_required
 def get_list(list_id):
     todo_list = TodoList.query.get_or_404(list_id)
+    if current_user.id != todo_list.user_id:
+        abort(401)
     form = AddTodoItemForm()
     if form.validate_on_submit():
         name = request.form.get('name')
