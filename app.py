@@ -31,7 +31,10 @@ def user_loader(user_id):
 
 @app.route('/')
 def homepage():
-    todo_lists = TodoList.query.all()
+    if current_user.is_authenticated:
+        todo_lists = TodoList.query.filter_by(user_id=current_user.id).all()
+    else:
+        todo_lists = []
     return render_template('index.html', title="ToDon't", todo_lists=todo_lists)
 
 
