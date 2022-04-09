@@ -1,0 +1,15 @@
+<div class="mb-3">
+    <div class="form-floating">
+        {{ field(class='form-control', placeholder=field.label.text) }}
+        {{ field.label }}
+    </div>
+    {% if field.errors %}
+    <div class="text-danger mt-1">
+        <ul class="list-unstyled">
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+</div>

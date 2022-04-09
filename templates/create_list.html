@@ -7,30 +7,17 @@
 {% block content %}
     <form action="{{ url_for('create_list') }}" method="POST">
         {{ form.csrf_token }}
+
+        {% with field=form.name %}
+            {% include 'text_field.html' %}
+        {% endwith %}
+
+        {% with field=form.cover %}
+            {% include 'text_field.html' %}
+        {% endwith %}
+
         <div>
-            {{ form.name.label }}
-            {{ form.name() }}
-            {% if form.name.errors %}
-                <ul class="errors">
-                {% for error in form.name.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-        <div>
-            {{ form.cover.label }}
-            {{ form.cover() }}
-            {% if form.cover.errors %}
-                <ul class="errors">
-                {% for error in form.cover.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-        <div>
-            <button type="submit">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
         </div>
     </form>
 {% endblock %}

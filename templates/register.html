@@ -12,25 +12,21 @@
                 <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
                 <p>Все поля являются обязательными</p>
 
-                <div class="form-floating mb-3">
-                    {{ form.email(class='form-control', placeholder=form.email.label.text) }}
-                    {{ form.email.label }}
-                </div>
+                {% with field=form.email %}
+                    {% include 'text_field.html' %}
+                {% endwith %}
 
-                <div class="form-floating mb-3">
-                    {{ form.nickname(class='form-control', placeholder=form.email.label.text) }}
-                    {{ form.nickname.label }}
-                </div>
+                {% with field=form.nickname %}
+                    {% include 'text_field.html' %}
+                {% endwith %}
 
-                <div class="form-floating mb-3">
-                    {{ form.password(class='form-control', placeholder=form.password.label.text) }}
-                    {{ form.password.label }}
-                </div>
+                {% with field=form.password %}
+                    {% include 'text_field.html' %}
+                {% endwith %}
 
-                <div class="form-floating mb-3">
-                    {{ form.password_confirmation(class='form-control', placeholder=form.password_confirmation.label.text) }}
-                    {{ form.password_confirmation.label }}
-                </div>
+                {% with field=form.password_confirmation %}
+                    {% include 'text_field.html' %}
+                {% endwith %}
 
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
             </form>
