@@ -81,6 +81,16 @@ def get_list(list_id):
     return render_template('list.html', todo_list=todo_list, form=form)
 
 
+@app.route('/items/<int:item_id>/change-state', methods=['POST'])
+def change_state(item_id):
+    item = TodoItem.query.get_or_404(item_id)
+    item.is_done = not item.is_done
+    db.session.add(item)
+    db.session.commit()
+    print(item)
+    return redirect(url_for('get_list', list_id=item.list_id))
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     register_form = RegistrationForm()
