@@ -46,7 +46,7 @@ def about():
 @app.route('/search')
 def search():
     text = escape(request.args.get('text', ''))
-    selected_lists = TodoList.query.filter(TodoList.name.like(f'%{text}%')).all()
+    selected_lists = TodoList.query.filter(TodoList.name.like(f'%{text}%')).filter_by(user_id=current_user.id).all()
     return render_template('index.html', todo_lists=selected_lists)
 
 
